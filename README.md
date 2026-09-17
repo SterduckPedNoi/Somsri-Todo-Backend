@@ -18,7 +18,7 @@
   <br />
   <br />
 
-  [🖥️ คลังโค้ดฝั่งหน้าบ้าน (Frontend Repo)](https://github.com/your-username/somsri-todo-frontend) • [🧪 เอกสารชุดทดสอบ (Postman Suite)](#-การทดสอบอัตโนมัติ-automated-testing)
+  [🖥️ คลังโค้ดฝั่งหน้าบ้าน (Frontend Repo)](https://github.com/SterduckPedNoi/Somsri-Todo-Frontend/tree/main) • [🧪 เอกสารชุดทดสอบ (Postman Suite)](#-การทดสอบอัตโนมัติ-automated-testing)
 
 </div>
 
@@ -191,4 +191,4 @@ node ace serve --watch
 
 * **Developer:** Yuttapat Na Nakornpanom
 * **Frontend Web App:** [https://somsri-todo-frontend.vercel.app/](https://somsri-todo-frontend.vercel.app/)
-* **GitHub Profile:** [@your-username](https://github.com/SterduckPedNoi)
+* **GitHub Profile:** [@SterduckPedNoi](https://github.com/SterduckPedNoi)
