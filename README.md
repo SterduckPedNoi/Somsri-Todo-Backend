@@ -191,4 +191,4 @@ node ace serve --watch
 
 * **Developer:** Yuttapat Na Nakornpanom
 * **Frontend Web App:** [https://somsri-todo-frontend.vercel.app/](https://somsri-todo-frontend.vercel.app/)
-* **GitHub Profile:** [@your-username](https://github.com/your-username)
+* **GitHub Profile:** [@your-username](https://github.com/SterduckPedNoi)
