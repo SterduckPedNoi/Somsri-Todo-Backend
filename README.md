@@ -1,52 +1,87 @@
-# Todo Receipt RESTful API Server (AdonisJS 5 + PostgreSQL)
+<div align="center">
 
-RESTful API Server สำหรับระบบจัดการ Todo List สไตล์ **To Do Receipt** พัฒนาด้วย **AdonisJS 5 (TypeScript)** และจัดเก็บข้อมูลใน **PostgreSQL** ผ่าน **Lucid ORM** พร้อมชุดทดสอบ **Postman Collection** ครบวงจร
+  # ⚡ Todo Receipt RESTful API Server
+  
+  **Robust, Scalable Backend Service for The Daily Run · To Do Receipt Application**  
+  ระบบหลังบ้านให้บริการ RESTful API พัฒนาด้วยสถาปัตยกรรม MVC บน **AdonisJS 5 (TypeScript)**  
+  จัดเก็บข้อมูลด้วย **PostgreSQL** ผ่าน **Lucid ORM** พร้อมชุดทดสอบอัตโนมัติ **Postman Test Suite**
+
+  <br />
+
+  <!-- Badges -->
+  [![AdonisJS 5](https://img.shields.io/badge/AdonisJS%205-5A45FF?style=for-the-badge&logo=adonisjs&logoColor=white)](https://adonisjs.com/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+  [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+  [![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+  [![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)](https://www.postman.com/)
+
+  <br />
+  <br />
+
+  [🖥️ คลังโค้ดฝั่งหน้าบ้าน (Frontend Repo)](https://github.com/your-username/somsri-todo-frontend) • [🧪 เอกสารชุดทดสอบ (Postman Suite)](#-การทดสอบอัตโนมัติ-automated-testing)
+
+</div>
 
 ---
 
-## 🚀 คุณสมบัติเด่น (Features)
-- พัฒนาด้วย **AdonisJS 5 (TypeScript)** รองรับ Architecture ที่เป็นมาตรฐานและ Clean Code
-- จัดเก็บข้อมูลจริงลงในฐานข้อมูล **PostgreSQL** ด้วย **Lucid ORM** และ Database Migrations
-- มี RESTful API ครบทุกฟังก์ชัน **CRUD (Create, Read, Update, Delete)**
-- รองรับการสลับสถานะ (Toggle completion) แบบรวดเร็วด้วย `PATCH /api/todos/:id/toggle`
-- เปิดใช้งาน **CORS** เพื่อรองรับการทำงานร่วมกับ Frontend (Vue.js 3)
-- มีชุดทดสอบอัตโนมัติด้วย **Postman Collection (v2.1)** พร้อม Assertion Scripts
+## 🌟 จุดเด่นของระบบ (Architecture Highlights)
+
+* **Enterprise MVC Architecture:** จัดการโครงสร้างโปรเจกต์อย่างเป็นระบบ แยก Controllers, Models, Validators และ Routes ชัดเจน
+* **Type-Safe Database Operations:** ใช้งาน **Lucid ORM** ร่วมกับ PostgreSQL ควบคุม Schema ผ่าน Database Migration อย่างแม่นยำ
+* **Atomic State Toggle:** รองรับ Endpoint เฉพาะทาง `PATCH /api/todos/:id/toggle` สำหรับสลับสถานะงานอย่างรวดเร็ว ลด Payload ที่ไม่จำเป็น
+* **CORS & Middleware Protection:** คอนฟิก Cross-Origin Resource Sharing เพื่อรองรับการเรียกใช้งานจาก Frontend Client (Vue.js 3)
+* **Automated Contract Testing:** มีชุดทดสอบ Postman Collection v2.1 พร้อมเขียน JavaScript Assertion Scripts ตรวจสอบสถานะและ Schema อัตโนมัติทุก Endpoint
 
 ---
 
-## 🛠 Tech Stack
-- **Framework:** AdonisJS 5.9.0
-- **Language:** TypeScript 4.x
-- **ORM:** Lucid ORM (@adonisjs/lucid 18.x)
-- **Database:** PostgreSQL 16
-- **Testing:** Postman Collection v2.1
+## 🗄️ โครงสร้างฐานข้อมูล (Database Schema)
+
+ตารางหลัก: `todos`
+
+| คอลัมน์ (Field) | ชนิดข้อมูล (Type) | ข้อจำกัด (Constraints) | คำอธิบาย |
+| :--- | :--- | :--- | :--- |
+| `id` | `BIGSERIAL` / `INT` | Primary Key, Auto-increment | รหัสประจำรายการงาน |
+| `title` | `VARCHAR(255)` | Not Null | ชื่อหรือรายละเอียดของงาน |
+| `is_completed` | `BOOLEAN` | Not Null, Default: `false` | สถานะการทำงาน (เสร็จ / ยังไม่เสร็จ) |
+| `created_at` | `TIMESTAMPTZ` | Not Null | วันเวลาที่สร้างข้อมูล |
+| `updated_at` | `TIMESTAMPTZ` | Not Null | วันเวลาที่มีการแก้ไขล่าสุด |
 
 ---
 
-## 📋 API Endpoints
+## 📋 ข้อมูลจำเพาะ API (API Specifications)
 
-Base URL: `http://127.0.0.1:3333`
+**Base URL:** `http://127.0.0.1:3333`
 
 | Method | Endpoint | Description | Request Body | Response Status |
-|--------|----------|-------------|--------------|-----------------|
-| `GET` | `/api/health` | Health check สถานะเซิร์ฟเวอร์ | None | `200 OK` |
-| `GET` | `/api/todos` | ดึงรายการ Todo ทั้งหมด (query: `?status=all\|active\|completed`) | None | `200 OK` |
-| `POST` | `/api/todos` | สร้าง Todo ใหม่ | `{"title": "string"}` | `201 Created` |
-| `GET` | `/api/todos/:id` | ดึงข้อมูล Todo ตาม ID | None | `200 OK` / `404 Not Found` |
-| `PUT` | `/api/todos/:id` | อัปเดตข้อมูล Todo (title หรือ is_completed) | `{"title": "...", "is_completed": true}` | `200 OK` / `404 Not Found` |
-| `PATCH` | `/api/todos/:id/toggle` | สลับสถานะเสร็จสิ้น (Toggle completed) | None | `200 OK` / `404 Not Found` |
-| `DELETE` | `/api/todos/:id` | ลบรายการ Todo ตาม ID | None | `200 OK` / `404 Not Found` |
+| :--- | :--- | :--- | :--- | :--- |
+| `GET` | `/api/health` | Health Check สถานะของเซิร์ฟเวอร์ | _None_ | `200 OK` |
+| `GET` | `/api/todos` | ดึงรายการงานทั้งหมด (`?status=all\|active\|completed`) | _None_ | `200 OK` |
+| `POST` | `/api/todos` | สร้างรายการงานใหม่ | `{"title": "string"}` | `201 Created` |
+| `GET` | `/api/todos/:id` | ดึงข้อมูลงานตาม ID | _None_ | `200 OK` / `404 Not Found` |
+| `PUT` | `/api/todos/:id` | อัปเดตข้อมูลงานทั้งหมด | `{"title": "string", "is_completed": boolean}` | `200 OK` / `404 Not Found` |
+| `PATCH` | `/api/todos/:id/toggle` | สลับสถานะงาน (`is_completed`) | _None_ | `200 OK` / `404 Not Found` |
+| `DELETE` | `/api/todos/:id` | ลบรายการงานตาม ID | _None_ | `200 OK` / `404 Not Found` |
 
-### ตัวอย่าง Response
+<details>
+<summary><b>🔍 คลิกเพื่อดูตัวอย่าง Request / Response Payload</b></summary>
 
-#### 1. สร้าง Todo สำเร็จ (`POST /api/todos`)
+<br />
+
+#### สร้างงานสำเร็จ (`POST /api/todos`)
 ```json
+// Headers: Content-Type: application/json
+// Body:
+{
+  "title": "Deploying API to cloud"
+}
+
+// Response: 201 Created
 {
   "success": true,
   "message": "Todo created successfully",
   "data": {
     "id": 1,
-    "title": "To moon",
+    "title": "Deploying API to cloud",
     "is_completed": false,
     "created_at": "2026-09-05T16:22:18.391+07:00",
     "updated_at": "2026-09-05T16:22:18.391+07:00"
@@ -54,14 +89,15 @@ Base URL: `http://127.0.0.1:3333`
 }
 ```
 
-#### 2. ดึงรายการ Todo ทั้งหมด (`GET /api/todos`)
+#### ดึงรายการงานทั้งหมด (`GET /api/todos`)
 ```json
+// Response: 200 OK
 {
   "success": true,
   "data": [
     {
       "id": 1,
-      "title": "To moon",
+      "title": "Deploying API to cloud",
       "is_completed": true,
       "created_at": "2026-09-05T16:22:18.391+07:00",
       "updated_at": "2026-09-05T16:22:18.487+07:00"
@@ -69,10 +105,44 @@ Base URL: `http://127.0.0.1:3333`
   ]
 }
 ```
+</details>
 
 ---
 
-## ⚙️ การติดตั้งและรันเซิร์ฟเวอร์ (Local Setup)
+## 🧪 การทดสอบอัตโนมัติ (Automated Testing)
+
+ภายในโฟลเดอร์ `postman/` ได้จัดเตรียมชุดทดสอบ API แบบอัตโนมัติเพื่อตรวจสอบความถูกต้องของระบบ:
+
+* 📦 `postman/Todo_API_Collection.json` — รวม Request ทั้งหมดและ JavaScript Tests
+* 🌐 `postman/Todo_API_Environment.json` — คอนฟิกตัวแปร Localhost และ Dynamic ID
+
+```
+Todo Receipt API - Automated Test Suite
+├── 01. Health Check [Status 200]
+├── 02. Get All Todos [Status 200, Array Check]
+├── 03. Create Todo [Status 201, Auto-store ID]
+├── 04. Get Todo By ID [Status 200, Schema Validation]
+├── 05. Update Todo [Status 200, Verify Mutation]
+├── 06. Toggle Todo Status [Status 200, Invert Boolean Check]
+├── 07. Filter Todos (?status=active) [Status 200]
+├── 08. Delete Todo [Status 200]
+└── 09. Get Non-Existing Todo [Status 404 Not Found]
+```
+
+### ขั้นตอนการรันการทดสอบใน Postman
+1. เปิดโปรแกรม **Postman** แล้วคลิกปุ่ม **Import**
+2. ลากไฟล์ทั้ง 2 ไฟล์จากโฟลเดอร์ `postman/` เข้าสู่โปรแกรม
+3. เลือก Environment ด้านมุมขวาบนเป็น **Localhost Environment (AdonisJS 5)**
+4. คลิกขวาที่ Collection **Todo Receipt API - Automated Test Suite** แล้วเลือก **Run Collection**
+5. ตรวจสอบสถานะการทดสอบ ทุกขั้นตอนต้องผ่าน Assertion สีเขียว 100%
+
+---
+
+## ⚙️ ขั้นตอนการติดตั้งและรันในเครื่อง (Local Setup)
+
+### สิ่งที่จำเป็นต้องมี (Prerequisites)
+* Node.js (v18.x ขึ้นไป)
+* PostgreSQL 14+ (กำลังรันอยู่ที่พอร์ต `5432`)
 
 ### 1. ติดตั้ง Dependencies
 ```bash
@@ -80,13 +150,17 @@ cd backend
 npm install
 ```
 
-### 2. ตั้งค่า Environment Variables (`.env`)
-คัดลอกไฟล์ตัวอย่าง `.env.example` เป็น `.env` และตั้งค่าการเชื่อมต่อ PostgreSQL:
+### 2. ตั้งค่าไฟล์ Environment Variables (`.env`)
+คัดลอกไฟล์ `.env.example` มาสร้างเป็น `.env`:
+```bash
+cp .env.example .env
+```
+กำหนดค่าการเชื่อมต่อฐานข้อมูลใน `.env`:
 ```env
 PORT=3333
 HOST=0.0.0.0
 NODE_ENV=development
-APP_KEY=dnAK9Zdz5XCdyaAqg7oUeqy6fEwwNeEF
+APP_KEY=generate_with_node_ace_generate_key
 DRIVE_DISK=local
 
 DB_CONNECTION=pg
@@ -97,28 +171,24 @@ PG_PASSWORD=your_postgres_password
 PG_DB_NAME=todos_db
 ```
 
-### 3. รัน Database Migration
+> 💡 *สร้าง `APP_KEY` ใหม่ได้ด้วยคำสั่ง: `node ace generate:key`*
+
+### 3. รัน Database Migrations
+ดำเนินการสร้างตารางใน PostgreSQL:
 ```bash
 node ace migration:run
 ```
 
-### 4. รัน Dev Server
+### 4. รัน Development Server
 ```bash
 node ace serve --watch
 ```
-เซิร์ฟเวอร์จะพร้อมทำงานที่ `http://127.0.0.1:3333`
+เซิร์ฟเวอร์จะเริ่มทำงานที่ `http://127.0.0.1:3333`
 
 ---
 
-## 🧪 การทดสอบด้วย Postman (Postman Testing)
-ในโฟลเดอร์ `postman/` มีไฟล์ทดสอบเตรียมไว้ให้แล้ว:
-1. `postman/Todo_API_Collection.json`
-2. `postman/Todo_API_Environment.json`
+## 👤 จัดทำโดย (Author)
 
-### วิธีนำเข้าและรันใน Postman:
-1. เปิดโปรแกรม **Postman**
-2. คลิกปุ่ม **Import** (มุมบนซ้าย)
-3. ลากไฟล์ทั้ง 2 ไฟล์ลงใน Postman
-4. เลือก Environment เป็น **Localhost Environment (AdonisJS 5)**
-5. คลิกที่ Collection **Todo Receipt API - Automated Test Suite** และกด **Run Collection**
-6. Postman จะรันการทดสอบ 9 ข้อโดยอัตโนมัติ พร้อมตรวจ Assertions สีเขียวผ่านทุกข้อ
+* **Developer:** Yuttapat Na Nakornpanom
+* **Frontend Web App:** [https://somsri-todo-frontend.vercel.app/](https://somsri-todo-frontend.vercel.app/)
+* **GitHub Profile:** [@your-username](https://github.com/your-username)
